@@ -1,0 +1,11 @@
+CACHE MANIFEST
+# 2016-11-28 v2
+/Assets/site.css
+/Assets/site.js
+
+/Assets/arrow-right.png
+/Assets/arrow-left.png
+
+NETWORK:
+/BusApi/GetStops
+/BusApi/GetNextBusTimes
