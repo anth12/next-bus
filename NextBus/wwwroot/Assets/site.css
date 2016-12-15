@@ -70,11 +70,11 @@ em{
     }
 
     .xs-col-right{
-        left: right;
+        float: right;
     }
 
     .xs-col-left{
-        left: left;
+        float: left;
     }
 }
 
@@ -87,6 +87,25 @@ em{
 
 .hidden{
     display: none;
+}
+
+/*
+    Notification
+*/
+.notification {
+    z-index: 999;
+    padding: 15px;
+    background: #87c301;
+    color: #ffffff;
+    position: absolute;
+    display: inline-block;
+    top: -50px;
+    right: 20px;
+    transition: 0.8s all;
+}
+
+.notification.active {
+    top: 20px;
 }
 
 /*

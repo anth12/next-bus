@@ -5,11 +5,13 @@ try {
         busStops: [],
         busStopLoockupScreen: null,
         arrivingSoonScreen: null,
+        notification: null,
 
         init: function() {
 
             app.busStopLoockupScreen = document.getElementsByClassName('bus-stop-lookup')[0];
             app.arrivingSoonScreen = document.getElementsByClassName('arriving-soon')[0];
+            app.notification = document.getElementsByClassName('notification')[0];
                         
             app.loadStops(function() {
 
@@ -27,6 +29,8 @@ try {
             if (localStorage.length <= 1) {
                 // load the stops from the API
 
+                app._showNotification('Loading bus stops');
+
                 fetch('/BusApi/GetStops').then(function(response) {
                     // Convert to JSON
                     return response.json();
@@ -38,6 +42,8 @@ try {
                     data.forEach(function(busStop) {
                         localStorage.setItem(busStop.Id, JSON.stringify(busStop));
                     });
+
+                    app._hideNotification();
 
                     callback();
                 });
@@ -129,7 +135,7 @@ try {
             app.updateBusTimes();
             
             // Reset the timer
-            clearTimeout(app.busUpdateInterval);
+            clearInterval(app.busUpdateInterval);
             app.busUpdateInterval = setInterval(function() {
 
                 app.updateBusTimes();
@@ -169,6 +175,9 @@ try {
             // Render the stop name
             document.getElementsByClassName('selected-stop')[0].textContent = app.currentBusStop.Name.split(',')[0];
 
+            // Clear any existing bus time data
+            document.getElementsByClassName('upcoming-buses')[0].innerHTML = '';
+
             app.updateBusTimes();
 
             // Start an interval to update
@@ -180,19 +189,33 @@ try {
 
         updateBusTimes: function() {
 
+            app._showNotification('Loading bus times');
+
             fetch('/BusApi/GetNextBusTimes/' + app.currentBusStop.Id).then(function(response) {
                 // Convert to JSON
-                return response.json();
+                try {
+                    return response.json();
+                } catch (e) {
+                    console.log('Error', e);
+                    app._hideNotification();
+                    return null;
+                }
             }).then(function(data) {
 
-                var html = '';
-                data.forEach(function(bus) {
+                try {
+                    var html = '';
+                    data.forEach(function(bus) {
 
-                    html += app._upcomingBusTemplate(bus);
-                });
+                        html += app._upcomingBusTemplate(bus);
+                    });
 
-                document.getElementsByClassName('upcoming-buses')[0].innerHTML = html;
-
+                    document.getElementsByClassName('upcoming-buses')[0].innerHTML = html;
+                } catch (e) {
+                    console.log('Error', e);
+                    app._hideNotification();
+                } finally {
+                    app._hideNotification();
+                }
             });
 
         },
@@ -269,6 +292,16 @@ try {
             var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
             var d = R * c; // Distance in km
             return d;
+        },
+
+        _showNotification: function(text) {
+            app.notification.innerHTML = text;
+            app.notification.className = 'notification active';
+        },
+
+        _hideNotification: function() {
+
+            app.notification.className = 'notification';
         }
 
     };
