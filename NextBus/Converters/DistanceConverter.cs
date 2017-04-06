@@ -1,0 +1,32 @@
+﻿using System;
+using System.Globalization;
+using Xamarin.Forms;
+
+namespace NextBus.Converters
+{
+    public class DistanceConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var distance = (decimal?) value;
+            if (distance == null)
+                return "";
+
+            if (distance < 1000)
+                return $"{distance}m away";
+
+            if (distance < 2000)
+                return $"{Math.Round(distance.Value/1000, 2)}km away";
+
+            if (distance > 9999)
+                return "A long wayaway";
+
+            return $"{Math.Round(distance.Value / 1000)}km away";
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

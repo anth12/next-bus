@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="NextBus.App">
+  <Application.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Primary">#002664</Color>
+            <Color x:Key="Secondary">#87c301</Color>
+            <Color x:Key="Light">#ffffff</Color>
+
+            <Color x:Key="Background">#2b2b2b</Color>
+            <Color x:Key="LightBackground">#e4eaf6</Color>
+
+            <Style TargetType="NavigationPage">
+                <Setter Property="BarBackgroundColor" Value="{StaticResource LightBackground}" />
+                <Setter Property="BarTextColor" Value="{StaticResource Primary}" />
+            </Style>
+            
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

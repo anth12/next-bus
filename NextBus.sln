@@ -1,11 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26020.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextBus.Web", "NextBus.Web\NextBus.Web.csproj", "{47AE6E08-9439-4ACB-91CE-6FBC3C3D5F07}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextBus.BackgroundApp", "NextBus.BackgroundApp\NextBus.BackgroundApp.csproj", "{1907940E-A8B3-4355-A7A1-4CAF6E3676CB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextBus", "NextBus\NextBus.csproj", "{701C30E4-20F4-43D9-9AC7-BEEB2C275889}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextBus.Android", "NextBus.Android\NextBus.Android.csproj", "{4F9581E5-DA8C-4296-B976-5797785743C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextBus.iOS", "NextBus.iOS\NextBus.iOS.csproj", "{3EFE35FB-DFA5-49D8-A923-7BA0820BEC62}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +47,30 @@ Global
 		{1907940E-A8B3-4355-A7A1-4CAF6E3676CB}.Release|x64.Build.0 = Release|Any CPU
 		{1907940E-A8B3-4355-A7A1-4CAF6E3676CB}.Release|x86.ActiveCfg = Release|Any CPU
 		{1907940E-A8B3-4355-A7A1-4CAF6E3676CB}.Release|x86.Build.0 = Release|Any CPU
+		{701C30E4-20F4-43D9-9AC7-BEEB2C275889}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{701C30E4-20F4-43D9-9AC7-BEEB2C275889}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{701C30E4-20F4-43D9-9AC7-BEEB2C275889}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{701C30E4-20F4-43D9-9AC7-BEEB2C275889}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{701C30E4-20F4-43D9-9AC7-BEEB2C275889}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{701C30E4-20F4-43D9-9AC7-BEEB2C275889}.Release|Any CPU.Build.0 = Release|Any CPU
+		{701C30E4-20F4-43D9-9AC7-BEEB2C275889}.Release|x64.ActiveCfg = Release|Any CPU
+		{701C30E4-20F4-43D9-9AC7-BEEB2C275889}.Release|x86.ActiveCfg = Release|Any CPU
+		{4F9581E5-DA8C-4296-B976-5797785743C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F9581E5-DA8C-4296-B976-5797785743C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F9581E5-DA8C-4296-B976-5797785743C6}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{4F9581E5-DA8C-4296-B976-5797785743C6}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4F9581E5-DA8C-4296-B976-5797785743C6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4F9581E5-DA8C-4296-B976-5797785743C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F9581E5-DA8C-4296-B976-5797785743C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F9581E5-DA8C-4296-B976-5797785743C6}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{4F9581E5-DA8C-4296-B976-5797785743C6}.Release|x64.ActiveCfg = Release|Any CPU
+		{4F9581E5-DA8C-4296-B976-5797785743C6}.Release|x86.ActiveCfg = Release|Any CPU
+		{3EFE35FB-DFA5-49D8-A923-7BA0820BEC62}.Debug|Any CPU.ActiveCfg = Debug|iPhone
+		{3EFE35FB-DFA5-49D8-A923-7BA0820BEC62}.Debug|x64.ActiveCfg = Debug|iPhone
+		{3EFE35FB-DFA5-49D8-A923-7BA0820BEC62}.Debug|x86.ActiveCfg = Debug|iPhone
+		{3EFE35FB-DFA5-49D8-A923-7BA0820BEC62}.Release|Any CPU.ActiveCfg = Release|iPhone
+		{3EFE35FB-DFA5-49D8-A923-7BA0820BEC62}.Release|x64.ActiveCfg = Release|iPhone
+		{3EFE35FB-DFA5-49D8-A923-7BA0820BEC62}.Release|x86.ActiveCfg = Release|iPhone
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

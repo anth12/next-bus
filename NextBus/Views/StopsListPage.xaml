@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:NextBus.ViewModels;assembly=NextBus"
+             x:Class="NextBus.Views.StopsListPage"
+              Title="{Binding Title}"
+             x:Name="BrowseStopsPage"
+            BarBackgroundColor="{StaticResource LightBackground}"
+            BarTextColor="{StaticResource Primary}">
+    <ContentPage.ToolbarItems>
+  	<ToolbarItem Icon="gps_reload.png" Command="{Binding ReloadLocationCommand}" />
+  </ContentPage.ToolbarItems>
+    <TabbedPage.BindingContext>
+        <viewModels:StopsListViewModel />
+    </TabbedPage.BindingContext>
+
+    <TabbedPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="BusStopTemplate">
+                
+            </DataTemplate>
+        </ResourceDictionary>
+    </TabbedPage.Resources>
+    
+    <!-- Neaby Tab -->
+    <ContentPage Title="Nearby Stops" Icon="stops_nearby.png">
+        <StackLayout>
+            <Label IsVisible="{Binding LoadingStopsFromApi}" Text="Loading Bus stop data for the first time. This may take 10-20 seconds" />
+            
+            <ListView x:Name="NearbyListView"
+				ItemsSource="{Binding NearbyStops}"
+                VerticalOptions="FillAndExpand"
+                HasUnevenRows="true"
+                RefreshCommand="{Binding LoadItemsCommand}"
+                IsPullToRefreshEnabled="true"
+                IsRefreshing="{Binding IsBusy}"
+				ItemSelected="OnItemSelected">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Padding="10">
+                                <Label Text="{Binding Name}"
+                                   LineBreakMode="NoWrap"
+                                   Style="{DynamicResource ListItemTextStyle}"
+                                   FontSize="16"/>
+                                <Label Text="{Binding Locality}"
+                                   LineBreakMode="NoWrap"
+                                   Style="{DynamicResource ListItemTextStyle}"
+                                   FontSize="16"/>
+                                <Label Text="{Binding DistanceText}"
+                                   LineBreakMode="NoWrap"
+                                   Style="{DynamicResource ListItemDetailTextStyle}"
+                                   FontSize="13"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage>
+    
+    <!-- Search Tab -->
+    <ContentPage Title="Search for a Bus Stop" Icon="stops_search.png">
+        <StackLayout>
+            <Label IsVisible="{Binding LoadingStopsFromApi}" Text="Loading Bus stop data for the first time. This may take 10-20 seconds" />
+            <SearchBar Text="{Binding FilterText}" Placeholder="Bus Stop Name" />
+            
+            <ListView x:Name="SearchListView"
+				ItemsSource="{Binding FilteredStops}"
+                VerticalOptions="FillAndExpand"
+                HasUnevenRows="true"
+                RefreshCommand="{Binding LoadItemsCommand}"
+                IsPullToRefreshEnabled="true"
+                IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+				ItemSelected="OnItemSelected">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Padding="10">
+                                <Label Text="{Binding Name}"
+                                   LineBreakMode="NoWrap"
+                                   Style="{DynamicResource ListItemTextStyle}"
+                                   FontSize="16"/>
+                                <Label Text="{Binding Locality}"
+                                   LineBreakMode="NoWrap"
+                                   Style="{DynamicResource ListItemTextStyle}"
+                                   FontSize="16"/>
+                                <Label Text="{Binding DistanceText}"
+                                   LineBreakMode="NoWrap"
+                                   Style="{DynamicResource ListItemDetailTextStyle}"
+                                   FontSize="13"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage>
+</TabbedPage>
