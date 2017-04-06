@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.26020.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextBus.Web", "NextBus.Web\NextBus.Web.csproj", "{47AE6E08-9439-4ACB-91CE-6FBC3C3D5F07}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextBus.App", "NextBus.App\NextBus.App.csproj", "{1907940E-A8B3-4355-A7A1-4CAF6E3676CB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextBus.BackgroundApp", "NextBus.BackgroundApp\NextBus.BackgroundApp.csproj", "{1907940E-A8B3-4355-A7A1-4CAF6E3676CB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
