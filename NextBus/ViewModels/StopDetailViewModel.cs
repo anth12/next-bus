@@ -7,7 +7,10 @@ namespace NextBus.ViewModels
         public BusStop Item { get; set; }
         public StopDetailViewModel(BusStop item = null)
         {
-            Title = item.Name;
+            if (item == null)
+                item = Mock.DesignTime.SingleStop;
+
+            Title = $"{item.Name}, {item.Locality}";
             Item = item;
         }
 

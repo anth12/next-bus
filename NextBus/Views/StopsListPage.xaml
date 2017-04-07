@@ -7,18 +7,16 @@
              x:Name="BrowseStopsPage"
             BarBackgroundColor="{StaticResource LightBackground}"
             BarTextColor="{StaticResource Primary}">
-    <ContentPage.ToolbarItems>
+    <TabbedPage.ToolbarItems>
   	<ToolbarItem Icon="gps_reload.png" Command="{Binding ReloadLocationCommand}" />
-  </ContentPage.ToolbarItems>
+  </TabbedPage.ToolbarItems>
     <TabbedPage.BindingContext>
         <viewModels:StopsListViewModel />
     </TabbedPage.BindingContext>
 
     <TabbedPage.Resources>
         <ResourceDictionary>
-            <DataTemplate x:Key="BusStopTemplate">
-                
-            </DataTemplate>
+            <DataTemplate x:Key="BusStopTemplate"/>
         </ResourceDictionary>
     </TabbedPage.Resources>
     
