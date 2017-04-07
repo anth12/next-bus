@@ -22,6 +22,10 @@ try {
 
                 app.updateDynamicTimes();
             }, 5000);
+			
+			setTimeout(function(){
+				app.app.showClosestStops();
+			}, 5000);
         },
 
         loadStops: function(callback) {
@@ -102,15 +106,26 @@ try {
             }
         },
 
+		showClosestStopsRun: false,
+		
         showClosestStops: function(position) {
+			
+			if(app.showClosestStopsRun && position == null)
+				return;
+			
+			
             var nearbyStops = document.getElementsByClassName('nearby-stops')[0];
 
             // Calculate distances
-            app.busStops.forEach(function(busStop) {
+			if(position != null) {
+				app.showClosestStopsRun = true;
+				
+				app.busStops.forEach(function(busStop) {
 
-                busStop.Distance = app._getDistance(position.coords.latitude, position.coords.longitude,
-                    busStop.Latitude, busStop.Longitude);
-            });
+					busStop.Distance = app._getDistance(position.coords.latitude, position.coords.longitude,
+							busStop.Latitude, busStop.Longitude);
+				});
+			}
 
             var distanceOrderedStops = app.busStops.sort(function(a, b) { return a.Distance - b.Distance; });
 
