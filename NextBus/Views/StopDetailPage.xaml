@@ -7,41 +7,44 @@
     <TabbedPage.BindingContext>
         <viewModels:StopDetailViewModel />
     </TabbedPage.BindingContext>
-    
-    <ContentPage Title="Next Bus">
 
-        <ListView x:Name="NearbyListView"
+    <ContentPage Title="Next Bus">
+        <StackLayout Orientation="Vertical">
+            <Label IsVisible="{Binding IsOffline}" Text="You are currently offline"/>
+            <ListView x:Name="NearbyListView"
 				ItemsSource="{Binding Item.Routes}"
                 VerticalOptions="FillAndExpand"
                 HasUnevenRows="true"
                 IsPullToRefreshEnabled="true"
-                IsRefreshing="{Binding IsBusy}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <StackLayout Padding="10">
-                            <Label Text="{Binding Name}"
+                RefreshCommand="{Binding ReloadCommand}"
+                IsRefreshing="{Binding IsBusy, Mode=OneWay}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Padding="10">
+                                <Label Text="{Binding Name}"
                                    LineBreakMode="NoWrap"
                                    Style="{DynamicResource ListItemTextStyle}"
                                    FontSize="16"/>
-                            <Label Text="{Binding ArrivesAt}"
+                                <Label Text="{Binding ArrivesAt}"
                                    LineBreakMode="NoWrap"
                                    Style="{DynamicResource ListItemTextStyle}"
                                    FontSize="16"/>
-                            <Label Text="{Binding Destination}"
+                                <Label Text="{Binding Destination}"
                                    LineBreakMode="NoWrap"
                                    Style="{DynamicResource ListItemDetailTextStyle}"
                                    FontSize="13"/>
-                        </StackLayout>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
 
     </ContentPage>
-    
+
     <ContentPage Title="Routes">
-        
+
     </ContentPage>
-	
+
 </TabbedPage>

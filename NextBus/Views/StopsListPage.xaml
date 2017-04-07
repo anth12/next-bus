@@ -8,8 +8,8 @@
             BarBackgroundColor="{StaticResource LightBackground}"
             BarTextColor="{StaticResource Primary}">
     <TabbedPage.ToolbarItems>
-  	<ToolbarItem Icon="gps_reload.png" Command="{Binding ReloadLocationCommand}" />
-  </TabbedPage.ToolbarItems>
+        <ToolbarItem Icon="gps_reload.png" Command="{Binding ReloadLocationCommand}" />
+    </TabbedPage.ToolbarItems>
     <TabbedPage.BindingContext>
         <viewModels:StopsListViewModel />
     </TabbedPage.BindingContext>
@@ -19,19 +19,19 @@
             <DataTemplate x:Key="BusStopTemplate"/>
         </ResourceDictionary>
     </TabbedPage.Resources>
-    
-    <!-- Neaby Tab -->
+
+    <!-- Nearby Tab -->
     <ContentPage Title="Nearby Stops" Icon="stops_nearby.png">
         <StackLayout>
             <Label IsVisible="{Binding LoadingStopsFromApi}" Text="Loading Bus stop data for the first time. This may take 10-20 seconds" />
-            
+
             <ListView x:Name="NearbyListView"
 				ItemsSource="{Binding NearbyStops}"
                 VerticalOptions="FillAndExpand"
                 HasUnevenRows="true"
                 RefreshCommand="{Binding LoadItemsCommand}"
                 IsPullToRefreshEnabled="true"
-                IsRefreshing="{Binding IsBusy}"
+                IsRefreshing="{Binding IsBusy, Mode=OneWay}"
 				ItemSelected="OnItemSelected">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -56,13 +56,13 @@
             </ListView>
         </StackLayout>
     </ContentPage>
-    
+
     <!-- Search Tab -->
     <ContentPage Title="Search for a Bus Stop" Icon="stops_search.png">
         <StackLayout>
             <Label IsVisible="{Binding LoadingStopsFromApi}" Text="Loading Bus stop data for the first time. This may take 10-20 seconds" />
             <SearchBar Text="{Binding FilterText}" Placeholder="Bus Stop Name" />
-            
+
             <ListView x:Name="SearchListView"
 				ItemsSource="{Binding FilteredStops}"
                 VerticalOptions="FillAndExpand"

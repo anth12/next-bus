@@ -1,14 +1,12 @@
-﻿using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-
-using NextBus.Helpers;
+﻿using NextBus.Helpers;
 using NextBus.Mock;
 using NextBus.Models;
 using NextBus.Services;
-using NextBus.Views;
 using PropertyChanged;
+using System;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace NextBus.ViewModels

@@ -40,6 +40,7 @@
     </Compile>
     <Compile Include="ConfigHelper.cs" />
     <Compile Include="Converters\DistanceConverter.cs" />
+    <Compile Include="Converters\TimeConverter.cs" />
     <Compile Include="Helpers\ApiHelper.cs" />
     <Compile Include="Helpers\FileHelper.cs" />
     <Compile Include="Helpers\MessengingCenterAlert.cs" />

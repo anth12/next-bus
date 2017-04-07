@@ -1,8 +1,8 @@
-﻿using System;
+﻿using NextBus.Helpers;
+using NextBus.Models;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using NextBus.Helpers;
-using NextBus.Models;
 
 namespace NextBus.Services
 {
@@ -39,6 +39,12 @@ namespace NextBus.Services
         {
             var busStop = (await GetStops())
                             .Stops.First(b => b.Id == busStopId);
+
+            return await GetStopDetails(busStop);
+        }
+
+        public async Task<ComingBusApiResponse> GetStopDetails(BusStop busStop)
+        {
             // Load the data
             return await ApiHelper.PostAsync<ComingBusApiResponse>("StopsMap/GetComingBus", new { BusStop = busStop });
         }
