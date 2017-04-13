@@ -173,6 +173,12 @@
   <ItemGroup>
     <Content Include="FodyWeavers.xml" />
     <AndroidResource Include="Resources\drawable\gps_reload.png" />
+    <AndroidResource Include="Resources\drawable\heart.png" />
+    <AndroidResource Include="Resources\drawable\heart_full.png" />
+    <AndroidResource Include="Resources\drawable\routes.png" />
+    <AndroidResource Include="Resources\drawable\time.png" />
+    <AndroidResource Include="Resources\drawable\heart_full_green.png" />
+    <AndroidResource Include="Resources\drawable\heart_green.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />

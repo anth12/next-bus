@@ -17,7 +17,11 @@ namespace NextBus
 
         public static void SetMainPage()
         {
-            Current.MainPage = new NavigationPage(new StopsListPage());
+            Current.MainPage = new NavigationPage(new StopsListPage())
+            {
+                BarTextColor = Color.FromHex("002664"),
+                BarBackgroundColor = Color.FromHex("e4eaf6")
+            };
         }
     }
 }

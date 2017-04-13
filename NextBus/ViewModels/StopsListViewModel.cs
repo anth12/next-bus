@@ -1,16 +1,18 @@
-﻿using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-
-using NextBus.Helpers;
+﻿using NextBus.Helpers;
 using NextBus.Mock;
 using NextBus.Models;
 using NextBus.Services;
+<<<<<<< HEAD
 using NextBus.Views;
 using Plugin.Geolocator;
 using Plugin.Geolocator.Abstractions;
+=======
+>>>>>>> origin/master
 using PropertyChanged;
+using System;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace NextBus.ViewModels

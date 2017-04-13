@@ -31,5 +31,9 @@ namespace NextBus.Models
         public Coordinates Coordinates => new Coordinates(Latitude, Longitude);
 
         public decimal? Distance { get; set; }
+
+        public bool IsFavorite { get; set; }
+
+        public string FavoriteIcon => IsFavorite ? "heart_full_green.png" : "heart_green.png";
     }
 }

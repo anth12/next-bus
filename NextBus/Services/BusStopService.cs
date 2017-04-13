@@ -1,14 +1,19 @@
-﻿using System;
+﻿using NextBus.Helpers;
+using NextBus.Models;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using NextBus.Helpers;
-using NextBus.Models;
 
 namespace NextBus.Services
 {
     public class BusStopService
     {
         private BusStopModelApiResponse _stops;
+
+        public async Task SaveChanges()
+        {
+            await FileHelper.PersistAsync(_stops);
+        }
 
         public async Task<BusStopModelApiResponse> GetStops(Action loadingFromApiCallback = null)
         {
@@ -29,7 +34,7 @@ namespace NextBus.Services
             if (_stops != null)
             {
                 // Write the data to disk
-                await FileHelper.PersistAsync(_stops);
+                await SaveChanges();
             }
 
             return _stops;
@@ -39,6 +44,12 @@ namespace NextBus.Services
         {
             var busStop = (await GetStops())
                             .Stops.First(b => b.Id == busStopId);
+
+            return await GetStopDetails(busStop);
+        }
+
+        public async Task<ComingBusApiResponse> GetStopDetails(BusStop busStop)
+        {
             // Load the data
             return await ApiHelper.PostAsync<ComingBusApiResponse>("StopsMap/GetComingBus", new { BusStop = busStop });
         }

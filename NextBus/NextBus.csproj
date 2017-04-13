@@ -40,9 +40,11 @@
     </Compile>
     <Compile Include="ConfigHelper.cs" />
     <Compile Include="Converters\DistanceConverter.cs" />
+    <Compile Include="Converters\TimeConverter.cs" />
     <Compile Include="Helpers\ApiHelper.cs" />
     <Compile Include="Helpers\FileHelper.cs" />
-    <Compile Include="Helpers\MessengingCenterAlert.cs" />
+    <Compile Include="Models\Messages\BusStopFavorited.cs" />
+    <Compile Include="Models\Messages\MessengingCenterAlert.cs" />
     <Compile Include="Helpers\ObservableObject.cs" />
     <Compile Include="Helpers\ObservableRangeCollection.cs" />
     <Compile Include="Logging\Appenders\FileAppender.cs" />

@@ -4,7 +4,7 @@ using Xamarin.Forms;
 
 namespace NextBus.Views
 {
-    public partial class StopDetailPage : ContentPage
+    public partial class StopDetailPage : TabbedPage
     {
         StopDetailViewModel viewModel;
 
