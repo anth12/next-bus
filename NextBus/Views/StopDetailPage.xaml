@@ -2,15 +2,22 @@
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:NextBus.ViewModels;assembly=NextBus"
+             xmlns:converters="clr-namespace:NextBus.Converters;assembly=NextBus"
              x:Class="NextBus.Views.StopDetailPage"
              Title="{Binding Title}">
     <TabbedPage.BindingContext>
         <viewModels:StopDetailViewModel />
     </TabbedPage.BindingContext>
-
+    <TabbedPage.Resources>
+        <converters:TimeConverter x:Key="TimeConverter"/>
+    </TabbedPage.Resources>
+    
     <ContentPage Title="Next Bus">
         <StackLayout Orientation="Vertical">
             <Label IsVisible="{Binding IsOffline}" Text="You are currently offline"/>
+            <Label>
+                <FormattedString></FormattedString>
+            </Label>
             <ListView x:Name="NearbyListView"
 				ItemsSource="{Binding Item.Routes}"
                 VerticalOptions="FillAndExpand"
