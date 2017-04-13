@@ -1,6 +1,8 @@
-﻿using Android.App;
+﻿using System;
+using Android.App;
 using Android.Content.PM;
 using Android.OS;
+using Plugin.Geolocator;
 using Plugin.Permissions;
 using Xamarin.Forms;
 
@@ -19,7 +21,7 @@ namespace NextBus.Droid
             global::Xamarin.Forms.Forms.Init(this, bundle);
 
             DependencyService.Register<UnifiedStorage.Android.FileSystem>();
-
+            
             LoadApplication(new App());
         }
 

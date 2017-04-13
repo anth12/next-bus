@@ -12,7 +12,7 @@ namespace NextBus.Converters
             if (distance == null)
                 return "";
 
-            if (distance < 1000)
+            //if (distance < 1000)
                 return $"{distance}m away";
 
             if (distance < 2000)

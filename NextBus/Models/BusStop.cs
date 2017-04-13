@@ -31,10 +31,5 @@ namespace NextBus.Models
         public Coordinates Coordinates => new Coordinates(Latitude, Longitude);
 
         public decimal? Distance { get; set; }
-        public string DistanceText => Distance == null
-            ? ""
-            : Distance < 1000
-                ? $"{Distance}m away"
-                : $"{Math.Round(Distance.Value / 1000, 2)}km away";
     }
 }

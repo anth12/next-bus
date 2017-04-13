@@ -2,6 +2,7 @@
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:NextBus.ViewModels;assembly=NextBus"
+             xmlns:converters="clr-namespace:NextBus.Converters;assembly=NextBus"
              x:Class="NextBus.Views.StopsListPage"
               Title="{Binding Title}"
              x:Name="BrowseStopsPage"
@@ -16,6 +17,7 @@
 
     <TabbedPage.Resources>
         <ResourceDictionary>
+            <converters:DistanceConverter x:Key="DistanceConverter"/>
             <DataTemplate x:Key="BusStopTemplate">
                 
             </DataTemplate>
@@ -47,7 +49,7 @@
                                    LineBreakMode="NoWrap"
                                    Style="{DynamicResource ListItemTextStyle}"
                                    FontSize="16"/>
-                                <Label Text="{Binding DistanceText}"
+                                <Label Text="{Binding Distance, Converter={StaticResource DistanceConverter}}"
                                    LineBreakMode="NoWrap"
                                    Style="{DynamicResource ListItemDetailTextStyle}"
                                    FontSize="13"/>

@@ -8,6 +8,8 @@ using NextBus.Mock;
 using NextBus.Models;
 using NextBus.Services;
 using NextBus.Views;
+using Plugin.Geolocator;
+using Plugin.Geolocator.Abstractions;
 using PropertyChanged;
 using Xamarin.Forms;
 
@@ -99,20 +101,38 @@ namespace NextBus.ViewModels
         {
             IsBusy = true;
 
-            await Task.Delay(1000);
-            IsBusy = false;
-            // TODO use last cached value then update async
-            //var position = await IoC.GeoLocator.GetPositionAsync(timeoutMilliseconds: 5000);
+            if (!CrossGeolocator.Current.IsGeolocationEnabled)
+            {
+                // TODO notify user
+                IsBusy = false;
+                return;
+            }
 
-            //if (position != null)
-            //{
-            //    var currentLocation = new Coordinates(position.Latitude, position.Longitude);
-            //    // Calculate stop distances
-            //    foreach (var busStop in items.Stops)
-            //    {
-            //        busStop.Distance = (int) busStop.Coordinates.DistanceFrom(currentLocation);
-            //    }
-            //}
+            // TODO use last cached value then update async
+            Position position;
+            try
+            {
+                position = await CrossGeolocator.Current.GetPositionAsync(timeoutMilliseconds: 5000);
+            }
+            catch (TaskCanceledException ex)
+            {
+                // TODO: Handle
+                IsBusy = false;
+                return;
+            }
+
+            if (position != null)
+            {
+                var currentLocation = new Coordinates(position.Latitude, position.Longitude);
+                // Calculate stop distances
+                foreach (var busStop in AllStops)
+                {
+                    busStop.Distance = (int)busStop.Coordinates.DistanceFrom(currentLocation);
+                }
+            }
+
+            IsBusy = false;
+
             UpdateStops();
         }
 
