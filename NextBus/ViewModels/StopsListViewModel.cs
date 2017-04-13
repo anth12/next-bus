@@ -2,17 +2,14 @@
 using NextBus.Mock;
 using NextBus.Models;
 using NextBus.Services;
-<<<<<<< HEAD
-using NextBus.Views;
-using Plugin.Geolocator;
-using Plugin.Geolocator.Abstractions;
-=======
->>>>>>> origin/master
 using PropertyChanged;
 using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using NextBus.Models.Messages;
+using Plugin.Geolocator;
+using Plugin.Geolocator.Abstractions;
 using Xamarin.Forms;
 
 namespace NextBus.ViewModels
@@ -24,6 +21,8 @@ namespace NextBus.ViewModels
         public ObservableRangeCollection<BusStop> AllStops { get; set; }
         public ObservableRangeCollection<BusStop> NearbyStops { get; set; }
         public ObservableRangeCollection<BusStop> FilteredStops { get; set; }
+        public ObservableRangeCollection<BusStop> FavoriteStops { get; set; }
+
         public Command LoadItemsCommand { get; set; }
         public Command ReloadLocationCommand { get; set; }
 
@@ -33,9 +32,12 @@ namespace NextBus.ViewModels
         public StopsListViewModel()
         {
             Title = "Nearby Stops";
+
             AllStops = new ObservableRangeCollection<BusStop>();
             NearbyStops = new ObservableRangeCollection<BusStop>();
             FilteredStops = new ObservableRangeCollection<BusStop>();
+            FavoriteStops = new ObservableRangeCollection<BusStop>();
+
             LoadItemsCommand = new Command(async () => await LoadItems());
             ReloadLocationCommand = new Command(async () => await ReloadLocation());
 
@@ -45,7 +47,22 @@ namespace NextBus.ViewModels
             }
 
             PropertyChangedEventHanders.Add(nameof(FilterText), FilterTextChanged);
+
+            MessagingCenter.Subscribe<BusStopFavorited>(this, "BusStopFavorited", BusStopFavorited);
         }
+
+        ~StopsListViewModel()
+        {
+            MessagingCenter.Unsubscribe<BusStopFavorited>(this,"BusStopFavorited");
+        }
+
+        private void BusStopFavorited(BusStopFavorited e)
+        {
+            FavoriteStops.ReplaceRange(
+                    AllStops.Where(s => s.IsFavorite)
+                );
+        }
+
 
         private void FilterTextChanged()
         {
@@ -70,9 +87,7 @@ namespace NextBus.ViewModels
             
             try
             {
-                var service = new BusStopService();
-
-                var items = await service.GetStops(
+                var items = await BusStopService.GetStops(
                     ()=> LoadingStopsFromApi = true
                 );
                 LoadingStopsFromApi = false;
@@ -142,7 +157,12 @@ namespace NextBus.ViewModels
         {
             if (!filterOnly)
             {
-                NearbyStops.ReplaceRange(AllStops.OrderBy(s => s.Distance).Take(15));
+                NearbyStops.ReplaceRange(
+                    AllStops.OrderBy(s => s.Distance).Take(15)
+                );
+                FavoriteStops.ReplaceRange(
+                    AllStops.Where(s=> s.IsFavorite)
+                );
             }
 
             FilterTextChanged();
