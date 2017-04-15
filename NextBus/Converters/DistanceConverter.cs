@@ -19,7 +19,7 @@ namespace NextBus.Converters
                 return $"{Math.Round(distance.Value/1000, 2)}km away";
 
             if (distance > 9999)
-                return "A long wayaway";
+                return "A long way away";
 
             return $"{Math.Round(distance.Value / 1000)}km away";
         }

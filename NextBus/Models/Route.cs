@@ -22,5 +22,8 @@ namespace NextBus.Models
 
         [JsonProperty("RA")]
         public bool RA { get; set; }
+
+        [JsonIgnore]
+        public string ArrivalTime => ArrivesAt ?? "30+";
     }
 }

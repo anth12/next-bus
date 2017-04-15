@@ -10,47 +10,6 @@ namespace NextBus.Helpers
 {
     public class ApiHelper
     {
-        //    /// <summary>
-        //    /// Invokes a Http Get to the API endpoint & deserialize's the json response
-        //    /// </summary>
-        //    /// <param name="apiPath">Relative path to the `LocalSettings.ApiEndpoing` base url</param>
-        //    /// <param name="retries">Number of allowed retries before giving up</param>
-        //    /// <returns></returns>
-        //    public static TType Get<TType>(string apiPath, int retries = 2)
-        //    {
-        //        try
-        //        {
-        //            using (var client = new HttpClient())
-        //            {
-        //                var response = client.GetAsync(LocalSettings.Current.ApiEndpoing + apiPath).Result;
-
-        //                if (response.StatusCode == HttpStatusCode.OK)
-        //                {
-        //                    var content = response.Content.ReadAsStringAsync().Result;
-
-        //                    if (string.IsNullOrWhiteSpace(content))
-        //                    {
-        //                        return default(TType);
-        //                    }
-
-        //                    return JsonConvert.DeserializeObject<TType>(content);
-        //                }
-        //            }
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            LogHelper.Error<ApiHelper>("Error executing Http request", ex);
-        //        }
-
-
-        //        if (retries > 0)
-        //        {
-        //            // Retry
-        //            return Get<TType>(apiPath, retries - 1);
-        //        }
-
-        //        return default(TType);
-        //    }
 
         public static Task<TType> PostAsync<TType>(string apiPath, int retries = 2)
         {

@@ -28,6 +28,7 @@ namespace NextBus.Models
         [JsonProperty("L")]
         public IList<Route> Routes { get; set; } = new List<Route>();
 
+        [JsonIgnore]
         public Position Position => new Position { Latitude = Latitude, Longitude = Longitude};
 
         public CustomStopData Data { get; set; } = new CustomStopData();

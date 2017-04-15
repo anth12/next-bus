@@ -18,6 +18,16 @@
         <ResourceDictionary>
             <converters:DistanceConverter x:Key="DistanceConverter"/>
             <DataTemplate x:Key="BusStopTemplate">
+                <ViewCell>
+                    <StackLayout Padding="10">
+                        <Label Text="{Binding Name}"
+                                   FontSize="16"/>
+                        <Label Text="{Binding Locality}"
+                                   FontSize="16"/>
+                        <Label Text="{Binding Data.Distance, Converter={StaticResource DistanceConverter}}"
+                                   FontSize="13"/>
+                    </StackLayout>
+                </ViewCell>
             </DataTemplate>
         </ResourceDictionary>
     </TabbedPage.Resources>
@@ -34,27 +44,8 @@
                 RefreshCommand="{Binding LoadItemsCommand}"
                 IsPullToRefreshEnabled="true"
                 IsRefreshing="{Binding IsBusy, Mode=OneWay}"
-				ItemSelected="OnItemSelected">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout Padding="10">
-                                <Label Text="{Binding Name}"
-                                   LineBreakMode="NoWrap"
-                                   Style="{DynamicResource ListItemTextStyle}"
-                                   FontSize="16"/>
-                                <Label Text="{Binding Locality}"
-                                   LineBreakMode="NoWrap"
-                                   Style="{DynamicResource ListItemTextStyle}"
-                                   FontSize="16"/>
-                                <Label Text="{Binding Data.Distance, Converter={StaticResource DistanceConverter}}"
-                                   LineBreakMode="NoWrap"
-                                   Style="{DynamicResource ListItemDetailTextStyle}"
-                                   FontSize="13"/>
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
+				ItemSelected="OnItemSelected"
+                ItemTemplate="{StaticResource BusStopTemplate}">
             </ListView>
         </StackLayout>
     </ContentPage>
@@ -72,27 +63,8 @@
                 RefreshCommand="{Binding LoadItemsCommand}"
                 IsPullToRefreshEnabled="true"
                 IsRefreshing="{Binding IsBusy, Mode=OneWay}"
-				ItemSelected="OnItemSelected">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout Padding="10">
-                                <Label Text="{Binding Name}"
-                                   LineBreakMode="NoWrap"
-                                   Style="{DynamicResource ListItemTextStyle}"
-                                   FontSize="16"/>
-                                <Label Text="{Binding Locality}"
-                                   LineBreakMode="NoWrap"
-                                   Style="{DynamicResource ListItemTextStyle}"
-                                   FontSize="16"/>
-                                <Label Text="{Binding Distance, Converter={StaticResource DistanceConverter}}"
-                                   LineBreakMode="NoWrap"
-                                   Style="{DynamicResource ListItemDetailTextStyle}"
-                                   FontSize="13"/>
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
+				ItemSelected="OnItemSelected"
+                ItemTemplate="{StaticResource BusStopTemplate}">
             </ListView>
         </StackLayout>
     </ContentPage>
@@ -109,27 +81,8 @@
                 RefreshCommand="{Binding LoadItemsCommand}"
                 IsPullToRefreshEnabled="true"
                 IsRefreshing="{Binding IsBusy, Mode=OneWay}"
-				ItemSelected="OnItemSelected">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout Padding="10">
-                                <Label Text="{Binding Name}"
-                                   LineBreakMode="NoWrap"
-                                   Style="{DynamicResource ListItemTextStyle}"
-                                   FontSize="16"/>
-                                <Label Text="{Binding Locality}"
-                                   LineBreakMode="NoWrap"
-                                   Style="{DynamicResource ListItemTextStyle}"
-                                   FontSize="16"/>
-                                <Label Text="{Binding Data.Distance, Converter={StaticResource DistanceConverter}}"
-                                   LineBreakMode="NoWrap"
-                                   Style="{DynamicResource ListItemDetailTextStyle}"
-                                   FontSize="13"/>
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
+				ItemSelected="OnItemSelected"
+                ItemTemplate="{StaticResource BusStopTemplate}">
             </ListView>
 
         </StackLayout>

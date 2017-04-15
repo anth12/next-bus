@@ -7,17 +7,16 @@ using System.Windows.Input;
 using NextBus.Logging;
 using NextBus.Models.Messages;
 using Xamarin.Forms;
-using System.Threading;
 using NextBus.Helpers;
 
 namespace NextBus.ViewModels
 {
     public class StopDetailViewModel : BaseViewModel, IDisposable
     {
-        public DateTime? LastUpdated { get; set; }
+        public DateTime LastUpdated { get; set; } = DateTime.MinValue;
         public bool IsOffline { get; set; }
         public BusStop Item { get; set; }
-        private Timer timer { get; set; }
+        
         public ICommand ReloadCommand { get; set; }
         public ICommand FavoriteCommand { get; set; }
 
@@ -36,13 +35,22 @@ namespace NextBus.ViewModels
             FavoriteCommand = new Command(async ()=> await Favorite());
             Title = $"{item.Name}, {item.Locality}";
             Item = item;
-            
-            //timer = new Timer(()=> Reload(false), 8000, 8000);
+
+            if(Timer.StopDetails != null)
+                Timer.StopDetails.Dispose();
+
+            Timer.StopDetails = new Timer(async()=> await Reload(false), 8000, 8000);
+            Reload(true);
         }
-        
+
+        ~StopDetailViewModel()
+        {
+            Timer.StopDetails.Dispose();
+        }
+
         public void Dispose()
         {
-            timer.Dispose();
+            Timer.StopDetails.Dispose();
         }
 
         public async Task Reload(bool showLoading = true)

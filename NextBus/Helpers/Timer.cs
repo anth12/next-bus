@@ -8,21 +8,32 @@ namespace NextBus.Helpers
 
     internal sealed class Timer : CancellationTokenSource, IDisposable
     {
-        public Timer(Action callback, int dueTime, int period)
+        private readonly SynchronizationContext Context;
+
+        internal static Timer StopDetails { get; set; }
+
+        public Timer(Action callback, int initialDelay, int executionPeriod)
         {
-            Task.Delay(dueTime, Token).ContinueWith(async (t, s) =>
+            Context = SynchronizationContext.Current;
+
+            Task.Delay(initialDelay, Token).ContinueWith(async (t, s) =>
             {
-                var tuple = (Tuple<Action, object>)s;
+                var action = (Action)s;
 
                 while (true)
                 {
                     if (IsCancellationRequested)
                         break;
-                    Task.Run(() => tuple.Item1());
-                    await Task.Delay(period);
+
+                    Context.Send(state =>
+                    {
+                        action.Invoke();
+                    }, null);
+                    
+                    await Task.Delay(executionPeriod);
                 }
 
-            }, Tuple.Create(callback), CancellationToken.None,
+            }, callback, CancellationToken.None,
                 TaskContinuationOptions.ExecuteSynchronously | TaskContinuationOptions.OnlyOnRanToCompletion,
                 TaskScheduler.Default);
         }

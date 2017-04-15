@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using NextBus.Logging;
@@ -25,10 +26,14 @@ namespace NextBus.Helpers
 
                 using (var stream = await file.OpenAsync(FileAccessOption.ReadWrite))
                 {
-                    using (var streamWriter = new StreamWriter(stream))
-                    {
-                        await streamWriter.WriteAsync(json);
-                    }
+                    var buffer = Encoding.UTF8.GetBytes(json);
+                    await stream.WriteAsync(buffer, 0, buffer.Length);
+                    stream.SetLength(buffer.Length);
+                    //using (var streamWriter = new StreamWriter(stream))
+                    //{
+                    //    await streamWriter.WriteAsync(buffer);
+                    //    stream.SetLength(j);
+                    //}
                 }
                 
                 Trace.WriteLine($"Persisted {fileName}");
