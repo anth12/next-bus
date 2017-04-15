@@ -179,6 +179,7 @@
     <AndroidResource Include="Resources\drawable\time.png" />
     <AndroidResource Include="Resources\drawable\heart_full_green.png" />
     <AndroidResource Include="Resources\drawable\heart_green.png" />
+    <AndroidResource Include="Resources\drawable\icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />

@@ -9,7 +9,7 @@ namespace NextBus.Logging
     /// </summary>
     public static class LogHelper
     {
-        public static List<ILogAppender> Appenders { get; set; }
+        public static List<ILogAppender> Appenders { get; set; } = new List<ILogAppender>();
 
         #region Info
 

@@ -5,10 +5,10 @@ namespace NextBus.Logging.Appenders
 {
     public interface ILogAppender
     {
-        void Write(LogEntry log);
+        Task Write(LogEntry log);
 
 
-        void ClearAll();
+        Task ClearAll();
 
         Task<IEnumerable<LogEntry>> ReadAllAsync();
     }

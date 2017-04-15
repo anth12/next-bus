@@ -1,50 +1,40 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            x:Class="NextBus.Views.DevTools"
             xmlns:viewModels="clr-namespace:NextBus.ViewModels;assembly=NextBus"
-            xmlns:converters="clr-namespace:NextBus.Converters;assembly=NextBus"
-            x:Class="NextBus.Views.StopDetailPage"
             Title="{Binding Title}"
             BarBackgroundColor="{StaticResource LightBackground}"
             BarTextColor="{StaticResource Primary}">
-    <TabbedPage.ToolbarItems>
-        <ToolbarItem Icon="{Binding Item.Data.FavoriteIcon}" Command="{Binding FavoriteCommand}" />
-    </TabbedPage.ToolbarItems>
     <TabbedPage.BindingContext>
-        <viewModels:StopDetailViewModel />
+        <viewModels:DevToolsViewModel />
     </TabbedPage.BindingContext>
-    <TabbedPage.Resources>
-        <converters:TimeConverter x:Key="TimeConverter"/>
-    </TabbedPage.Resources>
     
-    <ContentPage Title="Next Buses" Icon="time.png">
-        <StackLayout Orientation="Vertical">
-            <ContentView IsVisible="{Binding IsOffline}">
-                <Label Text="You are currently offline"/>
-            </ContentView>
+    <ContentPage Title="Event Log">
+    <StackLayout>
+      <Button Text="Clear Logs" Command="{Binding ClearLogsCommand}"></Button>
 
-            <!--<Label FormattedText="{Binding LastUpdated, Converter={StaticResource TimeConverter}}" />-->
-            
-            <ListView x:Name="NearbyListView"
-				ItemsSource="{Binding Item.Routes}"
+            <ListView x:Name="LogListView"
+				ItemsSource="{Binding Logs}"
                 VerticalOptions="FillAndExpand"
                 HasUnevenRows="true"
-                IsPullToRefreshEnabled="true"
                 RefreshCommand="{Binding ReloadCommand}"
-                IsRefreshing="{Binding IsBusy, Mode=OneWay}">
+                IsPullToRefreshEnabled="true"
+                IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                ItemSelected="LogListView_OnItemSelected">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout Padding="10">
-                                <Label Text="{Binding Name}"
+                                <Label Text="{Binding Title}"
                                    LineBreakMode="NoWrap"
                                    Style="{DynamicResource ListItemTextStyle}"
                                    FontSize="16"/>
-                                <Label Text="{Binding ArrivesAt}"
+                                <Label Text="{Binding Type}"
                                    LineBreakMode="NoWrap"
                                    Style="{DynamicResource ListItemTextStyle}"
                                    FontSize="16"/>
-                                <Label Text="{Binding Destination}"
+                                <Label Text="{Binding Source}"
                                    LineBreakMode="NoWrap"
                                    Style="{DynamicResource ListItemDetailTextStyle}"
                                    FontSize="13"/>
@@ -53,12 +43,26 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+
         </StackLayout>
+  </ContentPage>
+  <ContentPage Title="Trace Log">
+    <StackLayout>
 
-    </ContentPage>
-
-    <ContentPage Title="Routes" Icon="routes.png">
-
-    </ContentPage>
-
+            <Button Text="Clear Trace" Command="{Binding ClearTraceCommand}" />
+            <ListView x:Name="TraceListView"
+				ItemsSource="{Binding Traces}"
+                VerticalOptions="FillAndExpand"
+                HasUnevenRows="true"
+                IsPullToRefreshEnabled="true"
+                RefreshCommand="{Binding ReloadCommand}"
+                IsRefreshing="{Binding IsBusy, Mode=OneWay}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+  </ContentPage>
 </TabbedPage>

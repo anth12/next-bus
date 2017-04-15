@@ -14,6 +14,8 @@ namespace NextBus.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            var result = new FormattedString();
+
             var time = (DateTime?) value;
 
             if (time == null)
@@ -23,36 +25,68 @@ namespace NextBus.Converters
             var ts = new TimeSpan(DateTime.UtcNow.Ticks - time.Value.Ticks);
             double delta = Math.Abs(ts.TotalSeconds);
 
+            result.Spans.Add(new Span {Text = "Last updated " });
+
             if (delta < 1 * MINUTE)
-                return ts.Seconds == 1 ? "one second ago" : ts.Seconds + " seconds ago";
+                result.Spans.Add(new Span {
+                    Text = ts.Seconds == 1 ? "one second ago" : ts.Seconds + " seconds ago"
+                });
 
-            if (delta < 2 * MINUTE)
-                return "a minute ago";
+            else if (delta < 2*MINUTE)
+                result.Spans.Add(new Span
+                {
+                    Text = "a minute ago"
+                });
 
-            if (delta < 45 * MINUTE)
-                return ts.Minutes + " minutes ago";
+            else if (delta < 45*MINUTE)
+                result.Spans.Add(new Span
+                {
+                    Text = ts.Minutes + " minutes ago"
+                });
 
-            if (delta < 90 * MINUTE)
-                return "an hour ago";
+            else if (delta < 90*MINUTE)
+                result.Spans.Add(new Span
+                {
+                    Text = "an hour ago"
+                });
 
-            if (delta < 24 * HOUR)
-                return ts.Hours + " hours ago";
+            else if (delta < 24*HOUR)
+                result.Spans.Add(new Span
+                {
+                    Text = ts.Hours + " hours ago"
+                });
 
-            if (delta < 48 * HOUR)
-                return "yesterday";
+            else if (delta < 48*HOUR)
+                result.Spans.Add(new Span
+                {
+                    Text = "yesterday"
+                });
 
-            if (delta < 30 * DAY)
-                return ts.Days + " days ago";
+            else if (delta < 30*DAY)
+                result.Spans.Add(new Span
+                {
+                    Text = ts.Days + " days ago"
+                });
 
-            if (delta < 12 * MONTH)
+            else if (delta < 12*MONTH)
             {
-                int months = (int)(Math.Floor((double)ts.Days / 30));
-                return months <= 1 ? "one month ago" : months + " months ago";
+                int months = (int) (Math.Floor((double) ts.Days/30));
+                result.Spans.Add(new Span
+                {
+                    Text = months <= 1 ? "one month ago" : months + " months ago"
+                });
             }
 
-            int years = (int)(Math.Floor((double)ts.Days / 365));
-            return years <= 1 ? "one year ago" : years + " years ago";
-            
+            else
+            {
+                int years = (int) (Math.Floor((double) ts.Days/365));
+                result.Spans.Add(new Span
+                {
+                    Text = years <= 1 ? "one year ago" : years + " years ago"
+                });
+            }
+
+            return result;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

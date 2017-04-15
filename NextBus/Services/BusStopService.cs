@@ -8,14 +8,14 @@ namespace NextBus.Services
 {
     public class BusStopService
     {
-        private BusStopModelApiResponse _stops;
+        private static BusStopModelApiResponse _stops;
 
-        public async Task SaveChanges()
+        public static async Task SaveChanges()
         {
             await FileHelper.PersistAsync(_stops);
         }
 
-        public async Task<BusStopModelApiResponse> GetStops(Action loadingFromApiCallback = null)
+        public static async Task<BusStopModelApiResponse> GetStops(Action loadingFromApiCallback = null)
         {
             if (_stops != null)
                 return _stops;
@@ -40,7 +40,7 @@ namespace NextBus.Services
             return _stops;
         }
 
-        public async Task<ComingBusApiResponse> GetStopDetails(string busStopId)
+        public static async Task<ComingBusApiResponse> GetStopDetails(string busStopId)
         {
             var busStop = (await GetStops())
                             .Stops.First(b => b.Id == busStopId);
@@ -48,10 +48,10 @@ namespace NextBus.Services
             return await GetStopDetails(busStop);
         }
 
-        public async Task<ComingBusApiResponse> GetStopDetails(BusStop busStop)
+        public static async Task<ComingBusApiResponse> GetStopDetails(BusStop busStop)
         {
             // Load the data
-            return await ApiHelper.PostAsync<ComingBusApiResponse>("StopsMap/GetComingBus", new { BusStop = busStop });
+            return await ApiHelper.PostAsync<ComingBusApiResponse>("/StopsMap/GetComingBus", new { BusStop = busStop });
         }
 
     }

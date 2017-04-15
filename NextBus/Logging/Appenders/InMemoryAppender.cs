@@ -7,14 +7,16 @@ namespace NextBus.Logging.Appenders
     {
         private List<LogEntry> Items { get; set; } = new List<LogEntry>();
          
-        public void Write(LogEntry log)
+        public Task Write(LogEntry log)
         {
             Items.Add(log);
+            return Task.FromResult(true);
         }
 
-        public void ClearAll()
+        public Task ClearAll()
         {
             Items.Clear();
+            return Task.FromResult(true);
         }
 
         public async Task<IEnumerable<LogEntry>> ReadAllAsync()

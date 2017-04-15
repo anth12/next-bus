@@ -2,6 +2,7 @@
 using Android.App;
 using Android.Content.PM;
 using Android.OS;
+using NextBus.Logging;
 using Plugin.Geolocator;
 using Plugin.Permissions;
 using Xamarin.Forms;
@@ -23,6 +24,13 @@ namespace NextBus.Droid
             DependencyService.Register<UnifiedStorage.Android.FileSystem>();
             
             LoadApplication(new App());
+
+            AppDomain.CurrentDomain.UnhandledException += UnhandledException;
+        }
+
+        private void UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            LogHelper.Error<MainActivity>("Unhandled Exception", e?.ExceptionObject?.ToString() ?? e?.ToString());
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)

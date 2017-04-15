@@ -15,5 +15,15 @@ namespace NextBus.Tracing
         {
             Values.Add(value);
         }
+
+        public IEnumerable<string> GetValues()
+        {
+            return Values;
+        }
+
+        public void Clear()
+        {
+            Values.Clear();
+        }
     }
 }

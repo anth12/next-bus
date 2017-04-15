@@ -39,7 +39,7 @@ namespace NextBus.ViewModels
             FavoriteStops = new ObservableRangeCollection<BusStop>();
 
             LoadItemsCommand = new Command(async () => await LoadItems());
-            ReloadLocationCommand = new Command(async () => await ReloadLocation());
+            ReloadLocationCommand = new Command(async () => await ReloadLocation(true));
 
             if (Application.Current == null)
             {
@@ -59,7 +59,7 @@ namespace NextBus.ViewModels
         private void BusStopFavorited(BusStopFavorited e)
         {
             FavoriteStops.ReplaceRange(
-                    AllStops.Where(s => s.IsFavorite)
+                    AllStops.Where(s => s.Data.IsFavorite)
                 );
         }
 
@@ -114,7 +114,7 @@ namespace NextBus.ViewModels
             }
         }
 
-        public async Task ReloadLocation()
+        public async Task ReloadLocation(bool showLoadingPrecise = false)
         {
             IsBusy = true;
 
@@ -129,6 +129,7 @@ namespace NextBus.ViewModels
             Position position;
             try
             {
+                //CrossGeolocator.Current.Get
                 position = await CrossGeolocator.Current.GetPositionAsync(timeoutMilliseconds: 5000);
             }
             catch (TaskCanceledException ex)
@@ -144,7 +145,7 @@ namespace NextBus.ViewModels
                 // Calculate stop distances
                 foreach (var busStop in AllStops)
                 {
-                    busStop.Distance = (int)busStop.Coordinates.DistanceFrom(currentLocation);
+                    busStop.Data.Distance = (int)busStop.Coordinates.DistanceFrom(currentLocation);
                 }
             }
 
@@ -158,10 +159,10 @@ namespace NextBus.ViewModels
             if (!filterOnly)
             {
                 NearbyStops.ReplaceRange(
-                    AllStops.OrderBy(s => s.Distance).Take(15)
+                    AllStops.OrderBy(s => s.Data.Distance).Take(15)
                 );
                 FavoriteStops.ReplaceRange(
-                    AllStops.Where(s=> s.IsFavorite)
+                    AllStops.Where(s=> s.Data.IsFavorite)
                 );
             }
 

@@ -122,7 +122,7 @@
                                    LineBreakMode="NoWrap"
                                    Style="{DynamicResource ListItemTextStyle}"
                                    FontSize="16"/>
-                                <Label Text="{Binding Distance, Converter={StaticResource DistanceConverter}}"
+                                <Label Text="{Binding Data.Distance, Converter={StaticResource DistanceConverter}}"
                                    LineBreakMode="NoWrap"
                                    Style="{DynamicResource ListItemDetailTextStyle}"
                                    FontSize="13"/>
@@ -131,6 +131,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+
         </StackLayout>
     </ContentPage>
 
