@@ -8,12 +8,12 @@ namespace NextBus.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var distance = (decimal?) value;
+            var distance = (double?) value;
             if (distance == null)
                 return "";
 
-            //if (distance < 1000)
-                return $"{distance}m away";
+            if (distance < 1000)
+                return $"{Math.Round(distance.Value, 0)}m away";
 
             if (distance < 2000)
                 return $"{Math.Round(distance.Value/1000, 2)}km away";

@@ -8,6 +8,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using NextBus.Models.Messages;
+using NextBus.Tracing;
+using NextBus.Utilities.Extensions;
 using Plugin.Geolocator;
 using Plugin.Geolocator.Abstractions;
 using Xamarin.Forms;
@@ -124,34 +126,61 @@ namespace NextBus.ViewModels
                 IsBusy = false;
                 return;
             }
+            
+            Position position = null;
 
-            // TODO use last cached value then update async
-            Position position;
             try
             {
-                //CrossGeolocator.Current.Get
-                position = await CrossGeolocator.Current.GetPositionAsync(timeoutMilliseconds: 5000);
+                position = await CrossGeolocator.Current.GetLastKnownLocationAsync();
+                SetCurrentPosition(position);
+
+                if(position != null)
+                    Trace.WriteLine($"Found cached location: {position.Latitude}, {position.Longitude}");
+                else
+                    Trace.WriteLine("Unable to obtain cached location");
+
+            }
+            catch(Exception ex) { }
+            
+            if (!showLoadingPrecise)
+                IsBusy = false;
+
+            try
+            {
+                position = await CrossGeolocator.Current.GetPositionAsync(TimeSpan.FromSeconds(8));
+                SetCurrentPosition(position);
+
+                if (position != null)
+                    Trace.WriteLine($"Found location: {position.Latitude}, {position.Longitude}");
             }
             catch (TaskCanceledException ex)
             {
-                // TODO: Handle
-                IsBusy = false;
-                return;
-            }
-
-            if (position != null)
-            {
-                var currentLocation = new Coordinates(position.Latitude, position.Longitude);
-                // Calculate stop distances
-                foreach (var busStop in AllStops)
+                Trace.WriteLine("Unable to obtain location");
+                if (position == null)
                 {
-                    busStop.Data.Distance = (int)busStop.Coordinates.DistanceFrom(currentLocation);
+                    // TODO notify if no position obtainable
                 }
+            }
+            finally
+            {
+                IsBusy = false;
             }
 
             IsBusy = false;
+        }
 
-            UpdateStops();
+        private void SetCurrentPosition(Position position)
+        {
+            if (position != null)
+            {
+                // Calculate stop distances
+                foreach (var busStop in AllStops)
+                {
+                    busStop.Data.Distance = busStop.Position.DistanceFrom(position, PositionExtensions.UnitOfLength.Kilometers) * 1000;
+                }
+
+                UpdateStops();
+            }
         }
 
         private void UpdateStops(bool filterOnly = false)

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 using NextBus.Helpers;
+using Plugin.Geolocator.Abstractions;
 
 namespace NextBus.Models
 {
@@ -16,10 +17,10 @@ namespace NextBus.Models
         public string Z { get; set; }
 
         [JsonProperty("LA")]
-        public string Latitude { get; set; }
+        public double Latitude { get; set; }
 
         [JsonProperty("LO")]
-        public string Longitude { get; set; }
+        public double Longitude { get; set; }
 
         [JsonProperty("LOC")]
         public string Locality { get; set; }
@@ -27,7 +28,7 @@ namespace NextBus.Models
         [JsonProperty("L")]
         public IList<Route> Routes { get; set; } = new List<Route>();
 
-        public Coordinates Coordinates => new Coordinates(Latitude, Longitude);
+        public Position Position => new Position { Latitude = Latitude, Longitude = Longitude};
 
         public CustomStopData Data { get; set; } = new CustomStopData();
 
@@ -38,6 +39,6 @@ namespace NextBus.Models
         public bool IsFavorite { get; set; }
         public string FavoriteIcon => IsFavorite ? "heart_full_green.png" : "heart_green.png";
 
-        public decimal? Distance { get; set; }
+        public double? Distance { get; set; }
     }
 }
