@@ -13,20 +13,22 @@
     <TabbedPage.BindingContext>
         <viewModels:StopDetailViewModel />
     </TabbedPage.BindingContext>
-    <TabbedPage.Resources>
-        <converters:TimeConverter x:Key="TimeConverter"/>
-    </TabbedPage.Resources>
-    
+
     <ContentPage Title="Next Buses" Icon="time.png">
         <StackLayout Orientation="Vertical">
             <ContentView IsVisible="{Binding IsOffline}">
                 <Label Text="You are currently offline"/>
             </ContentView>
+    
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Auto refresh"/>
+                <Switch IsToggled="{Binding AutoRefresh}" />
+                <Label FormattedText="{Binding LastUpdatedText}" />
+            </StackLayout>
+            
 
-            <Label Text="{Binding LastUpdated, Converter={StaticResource TimeConverter}}" />
-
-            <ListView x:Name="NearbyListView"
-				ItemsSource="{Binding Item.Routes}"
+            <ListView x:Name="LiveRoutesListView"
+				ItemsSource="{Binding LiveRoutes}"
                 VerticalOptions="FillAndExpand"
                 HasUnevenRows="true"
                 IsPullToRefreshEnabled="true"
@@ -60,6 +62,27 @@
 
     <ContentPage Title="Routes" Icon="routes.png">
 
+        <ListView x:Name="RoutesListView"
+				ItemsSource="{Binding Item.OrderedRoutes}"
+                VerticalOptions="FillAndExpand"
+                HasUnevenRows="true">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Padding="10">
+
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding Name}" FontSize="18" TextColor="{StaticResource Secondary}" FontAttributes="Bold" />
+                                <Label Text="{Binding Destination}" FontSize="14" TextColor="{StaticResource Primary}"/>
+                            </StackLayout>
+
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        
+        
     </ContentPage>
 
 </TabbedPage>

@@ -24,6 +24,6 @@ namespace NextBus.Models
         public bool RA { get; set; }
 
         [JsonIgnore]
-        public string ArrivalTime => ArrivesAt ?? "30+";
+        public string ArrivalTime => string.IsNullOrEmpty(ArrivesAt) ? "30+" : ArrivesAt;
     }
 }

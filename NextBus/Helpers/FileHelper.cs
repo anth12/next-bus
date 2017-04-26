@@ -12,7 +12,7 @@ namespace NextBus.Helpers
 {
     internal static class FileHelper
     {
-        public static async Task PersistAsync<TData>(TData data)
+        public static async Task<bool> PersistAsync<TData>(TData data)
         {
             var fileName = typeof (TData).Name + ".json";
 
@@ -29,19 +29,16 @@ namespace NextBus.Helpers
                     var buffer = Encoding.UTF8.GetBytes(json);
                     await stream.WriteAsync(buffer, 0, buffer.Length);
                     stream.SetLength(buffer.Length);
-                    //using (var streamWriter = new StreamWriter(stream))
-                    //{
-                    //    await streamWriter.WriteAsync(buffer);
-                    //    stream.SetLength(j);
-                    //}
                 }
                 
                 Trace.WriteLine($"Persisted {fileName}");
+                return true;
             }
             catch (Exception ex)
             {
                 Trace.WriteLine($"Persistence error {fileName}");
                 LogHelper.Error($"Error persisting {fileName}", ex);
+                return false;
             }
         }
 
@@ -90,5 +87,30 @@ namespace NextBus.Helpers
 
             return null;
         }
+
+
+        public static async Task<bool> DeleteAsync<TData>()
+        {
+            var fileName = typeof(TData).Name + ".json";
+
+            Trace.WriteLine($"Persisting {fileName}");
+            try
+            {
+
+                var fileSystem = DependencyService.Get<IFileSystem>();
+                var file = await fileSystem.LocalStorage.GetFileAsync(fileName);
+
+                await file.DeleteAsync();
+                Trace.WriteLine($"Deleted {fileName}");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine($"Deletion error {fileName}");
+                LogHelper.Error($"Error deleting {fileName}", ex);
+                return false;
+            }
+        }
+
     }
 }

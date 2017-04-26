@@ -5,6 +5,8 @@ using System.Windows.Input;
 using NextBus.Logging;
 using Xamarin.Forms;
 using NextBus.Helpers;
+using NextBus.Models;
+using NextBus.Services;
 using NextBus.Tracing;
 
 namespace NextBus.ViewModels
@@ -17,6 +19,7 @@ namespace NextBus.ViewModels
         public ICommand ReloadCommand { get; set; }
         public ICommand ClearLogsCommand { get; set; }
         public ICommand ClearTraceCommand { get; set; }
+        public ICommand ClearDataCommand { get; set; }
         
 
         public DevToolsViewModel()
@@ -30,6 +33,7 @@ namespace NextBus.ViewModels
             ReloadCommand = new Command(async()=> await Reload());
             ClearLogsCommand = new Command(async()=> await ClearLogs());
             ClearTraceCommand = new Command(async ()=> await ClearTrace());
+            ClearDataCommand = new Command(async ()=> await ClearData());
             Title = "Dev Tools";
         }
 
@@ -66,15 +70,14 @@ namespace NextBus.ViewModels
                 await Reload();
             }
         }
-
         public async Task ClearTrace()
         {
             IsBusy = true;
             try
             {
-                foreach (var traceListener in Trace.Listeners)
+                foreach (var listener in Trace.Listeners)
                 {
-                    traceListener.Clear();
+                    listener.Clear();
                 }
             }
             finally
@@ -82,5 +85,19 @@ namespace NextBus.ViewModels
                 await Reload();
             }
         }
+
+        public async Task ClearData()
+        {
+            IsBusy = true;
+            try
+            {
+                await FileHelper.DeleteAsync<BusStopModelApiResponse>();
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
     }
 }

@@ -5,11 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using NextBus.Logging;
+using NextBus.Tracing;
 
 namespace NextBus.Helpers
 {
     public class ApiHelper
     {
+        private static int requestCount = 0;
 
         public static Task<TType> PostAsync<TType>(string apiPath, int retries = 2)
         {
@@ -27,6 +29,7 @@ namespace NextBus.Helpers
         /// </summary>
         public static async Task<TType> PostAsync<TType>(string apiPath, string payload, int retries = 2)
         {
+            Trace.Write($"Http Request {requestCount++}");
             try
             {
                 using (var client = new HttpClient())

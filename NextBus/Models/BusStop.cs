@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 using NextBus.Helpers;
 using Plugin.Geolocator.Abstractions;
@@ -30,6 +31,10 @@ namespace NextBus.Models
 
         [JsonIgnore]
         public Position Position => new Position { Latitude = Latitude, Longitude = Longitude};
+
+        [JsonIgnore]
+        public IList<Route> OrderedRoutes => Routes.GroupBy(r => r.Name).Select(g => g.First()).OrderBy(r=> r.O).ToList();
+
 
         public CustomStopData Data { get; set; } = new CustomStopData();
 

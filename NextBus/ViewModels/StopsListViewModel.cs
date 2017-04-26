@@ -82,6 +82,7 @@ namespace NextBus.ViewModels
 
         public async Task LoadItems()
         {
+            Trace.WriteLine("Loading Items");
             if (IsBusy || Application.Current == null)
                 return;
 
@@ -111,7 +112,7 @@ namespace NextBus.ViewModels
             }
             finally
             {
-                IsBusy = false;
+                Device.BeginInvokeOnMainThread(() => IsBusy = false);
                 UpdateStops();
             }
         }
@@ -123,7 +124,7 @@ namespace NextBus.ViewModels
             if (!CrossGeolocator.Current.IsGeolocationEnabled)
             {
                 // TODO notify user
-                IsBusy = false;
+                Device.BeginInvokeOnMainThread(() => IsBusy = false);
                 return;
             }
             
@@ -143,11 +144,11 @@ namespace NextBus.ViewModels
             catch(Exception ex) { }
             
             if (!showLoadingPrecise)
-                IsBusy = false;
+                Device.BeginInvokeOnMainThread(() => IsBusy = false);
 
             try
             {
-                position = await CrossGeolocator.Current.GetPositionAsync(TimeSpan.FromSeconds(8));
+                position = await CrossGeolocator.Current.GetPositionAsync(TimeSpan.FromSeconds(3));
                 SetCurrentPosition(position);
 
                 if (position != null)

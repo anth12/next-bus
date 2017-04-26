@@ -9,7 +9,7 @@ using Xamarin.Forms;
 
 namespace NextBus.Droid
 {
-    [Activity(Label = "@string/app_name", Theme = "@style/MyTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "@string/app_name", Theme = "@style/MyTheme", MainLauncher = false, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)
@@ -24,6 +24,7 @@ namespace NextBus.Droid
             DependencyService.Register<UnifiedStorage.Android.FileSystem>();
             
             LoadApplication(new App());
+            Window.SetStatusBarColor(new Android.Graphics.Color(0, 38, 100));
 
             AppDomain.CurrentDomain.UnhandledException += UnhandledException;
         }

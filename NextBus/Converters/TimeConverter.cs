@@ -12,31 +12,36 @@ namespace NextBus.Converters
         const int DAY = 24 * HOUR;
         const int MONTH = 30 * DAY;
 
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public static string Convert(DateTime time)
         {
-            var time = (DateTime) value;
-
             if (time == DateTime.MinValue)
                 return "";
 
-            
             var ts = new TimeSpan(DateTime.UtcNow.Ticks - time.Ticks);
             double delta = Math.Abs(ts.TotalSeconds);
 
+            if (delta < 1)
+                return "Just now";
 
-            if (delta < 1*MINUTE)
-                return "Last updated: " + (ts.Seconds == 1 ? "one second ago" : ts.Seconds + " seconds ago");
+            if (delta < 1 * MINUTE)
+                return ts.Seconds == 1 ? "one second ago" : ts.Seconds + " seconds ago";
 
-            if (delta < 2*MINUTE)
-                return "Last updated: a minute ago";
+            if (delta < 2 * MINUTE)
+                return "a minute ago";
 
-            if (delta < 45*MINUTE)
-                return "Last updated: " + ts.Minutes + " minutes ago";
+            if (delta < 45 * MINUTE)
+                return ts.Minutes + " minutes ago";
 
-            if (delta < 90*MINUTE)
-                return "Last updated: " + "an hour ago";
+            if (delta < 90 * MINUTE)
+                return "an hour ago";
 
-            return "Last updated: a while ago";
+            return "a while ago";
+        }
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var time = (DateTime)value;
+            return "Last updated: " + Convert(time);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

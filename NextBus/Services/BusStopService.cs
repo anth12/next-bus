@@ -3,6 +3,7 @@ using NextBus.Models;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using NextBus.Tracing;
 
 namespace NextBus.Services
 {
@@ -24,12 +25,17 @@ namespace NextBus.Services
             _stops = await FileHelper.LoadAsync<BusStopModelApiResponse>();
 
             if (_stops != null)
+            {
+                Trace.Write("Stops loaded from Disk");
                 return _stops;
+            }
 
             loadingFromApiCallback?.Invoke();
 
             // Load the data
+            Trace.Write("Loading stops from API");
             _stops = await ApiHelper.PostAsync<BusStopModelApiResponse>("/StopsMap/GetBusStops");
+            Trace.Write("Stops loaded from API");
 
             if (_stops != null)
             {

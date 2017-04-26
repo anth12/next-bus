@@ -4,18 +4,33 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using NextBus.Converters;
 using NextBus.Logging;
 using NextBus.Models.Messages;
 using Xamarin.Forms;
 using NextBus.Helpers;
+using NextBus.Tracing;
 
 namespace NextBus.ViewModels
 {
-    public class StopDetailViewModel : BaseViewModel, IDisposable
+    public class StopDetailViewModel : BaseViewModel
     {
+        public bool AutoRefresh { get; set; } = true;
+
         public DateTime LastUpdated { get; set; } = DateTime.MinValue;
+
+        public FormattedString LastUpdatedText => new FormattedString
+        {
+            Spans =
+            {
+                new Span { Text = "Last Updated: "},
+                new Span { Text = TimeConverter.Convert(LastUpdated)}
+            }
+        };
+
         public bool IsOffline { get; set; }
         public BusStop Item { get; set; }
+        public ObservableRangeCollection<Route> LiveRoutes { get; set; } = new ObservableRangeCollection<Route>();
         
         public ICommand ReloadCommand { get; set; }
         public ICommand FavoriteCommand { get; set; }
@@ -35,38 +50,22 @@ namespace NextBus.ViewModels
             FavoriteCommand = new Command(async ()=> await Favorite());
             Title = $"{item.Name}, {item.Locality}";
             Item = item;
-
-            if(Timer.StopDetails != null)
-                Timer.StopDetails.Dispose();
-
-            Timer.StopDetails = new Timer(async()=> await Reload(false), 8000, 8000);
-            Reload(true);
-        }
-
-        ~StopDetailViewModel()
-        {
-            Timer.StopDetails.Dispose();
-        }
-
-        public void Dispose()
-        {
-            Timer.StopDetails.Dispose();
         }
 
         public async Task Reload(bool showLoading = true)
         {
             if(showLoading)
                 IsBusy = true;
-            
+
+            Trace.Write("Reloading stop data");
             try
             {
                 var response = await BusStopService.GetStopDetails(Item);
                 if (response != null)
                 {
                     LastUpdated = DateTime.Now;
-                    var data = Item.Data;
-                    Item = response.Stops.First(s => s.Id == Item.Id);
-                    Item.Data = data;
+                    
+                    LiveRoutes.ReplaceRange(response.Stops.First(s => s.Id == Item.Id).Routes);
                 }
                 
                 IsOffline = response == null;
