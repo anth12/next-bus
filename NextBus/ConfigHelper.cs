@@ -11,7 +11,7 @@ namespace NextBus
 #if DEBUG
         /*
          * Development Configuration
-         * Please ensure live settings are not commited to source control here
+         * Please ensure live settings are not committed to source control here
          */
 
         public static LocalSettingsModel Current = new LocalSettingsModel
@@ -28,7 +28,7 @@ namespace NextBus
         {
             ApiEndpoing = "https://www.publictransport.com.mt/appws",
             ApiVersion = "1.3.1",
-            EnableDeveloperTools = false
+            //EnableDeveloperTools = false
         };
 #endif
 
