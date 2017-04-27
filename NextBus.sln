@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextBus", "NextBus\NextBus.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextBus.Android", "NextBus.Android\NextBus.Android.csproj", "{4F9581E5-DA8C-4296-B976-5797785743C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextBus.iOS", "NextBus.iOS\NextBus.iOS.csproj", "{3EFE35FB-DFA5-49D8-A923-7BA0820BEC62}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,12 +63,6 @@ Global
 		{4F9581E5-DA8C-4296-B976-5797785743C6}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{4F9581E5-DA8C-4296-B976-5797785743C6}.Release|x64.ActiveCfg = Release|Any CPU
 		{4F9581E5-DA8C-4296-B976-5797785743C6}.Release|x86.ActiveCfg = Release|Any CPU
-		{3EFE35FB-DFA5-49D8-A923-7BA0820BEC62}.Debug|Any CPU.ActiveCfg = Debug|iPhone
-		{3EFE35FB-DFA5-49D8-A923-7BA0820BEC62}.Debug|x64.ActiveCfg = Debug|iPhone
-		{3EFE35FB-DFA5-49D8-A923-7BA0820BEC62}.Debug|x86.ActiveCfg = Debug|iPhone
-		{3EFE35FB-DFA5-49D8-A923-7BA0820BEC62}.Release|Any CPU.ActiveCfg = Release|iPhone
-		{3EFE35FB-DFA5-49D8-A923-7BA0820BEC62}.Release|x64.ActiveCfg = Release|iPhone
-		{3EFE35FB-DFA5-49D8-A923-7BA0820BEC62}.Release|x86.ActiveCfg = Release|iPhone
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
