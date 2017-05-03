@@ -1,17 +1,16 @@
 ﻿using NextBus.Helpers;
 using NextBus.Mock;
 using NextBus.Models;
-using NextBus.Services;
-using PropertyChanged;
-using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using NextBus.Models.Messages;
+using NextBus.Services;
 using NextBus.Tracing;
 using NextBus.Utilities.Extensions;
 using Plugin.Geolocator;
 using Plugin.Geolocator.Abstractions;
+using PropertyChanged;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace NextBus.ViewModels
@@ -101,7 +100,7 @@ namespace NextBus.ViewModels
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
+                Trace.Write(ex.ToString());
                 // Message maybe?
                 MessagingCenter.Send(new MessagingCenterAlert
                 {
