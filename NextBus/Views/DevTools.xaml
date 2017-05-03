@@ -11,8 +11,11 @@
     </TabbedPage.BindingContext>
     
     <ContentPage Title="Tools">
-        <Button Command="{Binding ClearDataCommand}" Text="Clear local Data"/>
+        <StackLayout Orientation="Vertical">
+            <Button Command="{Binding ClearDataCommand}" Text="Clear local Data"/>
+        </StackLayout>
     </ContentPage>
+    
     <ContentPage Title="Event Log">
     <StackLayout>
       <Button Text="Clear Logs" Command="{Binding ClearLogsCommand}"></Button>

@@ -1,12 +1,13 @@
-﻿using System;
-using System.Linq;
-using NextBus.Logging;
+﻿using NextBus.Logging;
 using NextBus.Logging.Appenders;
 using NextBus.Tracing;
 using NextBus.Views;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Microsoft.Azure.Mobile;
+using Microsoft.Azure.Mobile.Analytics;
+using Microsoft.Azure.Mobile.Crashes;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace NextBus
@@ -18,6 +19,14 @@ namespace NextBus
             InitializeComponent();
 
             SetMainPage();
+        }
+
+        protected override void OnStart()
+        {
+            base.OnStart();
+
+            MobileCenter.Start("android=130a026a-d5ea-4915-9c9f-6d0a200e5c36;" + "ios=TODO",
+                   typeof(Analytics), typeof(Crashes));
         }
 
         public static void SetMainPage()

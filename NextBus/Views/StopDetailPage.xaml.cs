@@ -1,9 +1,8 @@
-﻿using System;
+﻿using NextBus.Tracing;
+using NextBus.ViewModels;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
-using NextBus.Tracing;
-using NextBus.ViewModels;
-
 using Xamarin.Forms;
 
 namespace NextBus.Views
@@ -46,7 +45,7 @@ namespace NextBus.Views
                             () => viewModel.LastUpdated = viewModel.LastUpdated.AddMilliseconds(1));
                     }
                 }
-                Trace.Write("Canceling timer");
+                Trace.Write("Cancelling timer");
             }, timerCancellation.Token);
             base.OnAppearing();
         }
