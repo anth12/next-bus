@@ -25,7 +25,7 @@ namespace NextBus.Web.Controllers
         }
 
         private const string ApiEndpoint = "https://www.publictransport.com.mt/appws/";
-        private const string ApiVersion = "1.3.1";
+        private const string ApiVersion = "1.4.5";
         private string RawBusStopDataPath => _hostingEnvironment.WebRootPath + "\\App_Data\\bus-stops-raw.json";
         private string BusStopDataPath => _hostingEnvironment.WebRootPath + "\\App_Data\\bus-stops.json";
 
