@@ -17,7 +17,7 @@ namespace NextBus
         public static LocalSettingsModel Current = new LocalSettingsModel
         {
             ApiEndpoing = "https://www.publictransport.com.mt/appws",
-            ApiVersion = "1.3.1"
+            ApiVersion = "1.4.5"
         };
 #else
 /*
@@ -27,7 +27,7 @@ namespace NextBus
         public static LocalSettingsModel Current = new LocalSettingsModel
         {
             ApiEndpoing = "https://www.publictransport.com.mt/appws",
-            ApiVersion = "1.3.1",
+            ApiVersion = "1.4.5",
             //EnableDeveloperTools = false
         };
 #endif
