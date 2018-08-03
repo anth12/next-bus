@@ -15,13 +15,13 @@ namespace NextBus.Converters
             if (distance < 1000)
                 return $"{Math.Round(distance.Value, 0)}m away";
 
-            if (distance < 2000)
+            if (distance < 2500)
                 return $"{Math.Round(distance.Value/1000, 2)}km away";
 
-            if (distance > 9999)
-                return "A long way away";
+            if (distance < 9999)
+                return $"{Math.Round(distance.Value / 1000)}km away";
 
-            return $"{Math.Round(distance.Value / 1000)}km away";
+            return "A long way away";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
