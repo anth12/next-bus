@@ -38,7 +38,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ConfigHelper.cs" />
+    <Compile Include="LocalSettings.cs" />
     <Compile Include="Converters\DistanceConverter.cs" />
     <Compile Include="Converters\TimeConverter.cs" />
     <Compile Include="Helpers\ApiHelper.cs" />
